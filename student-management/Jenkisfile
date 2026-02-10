@@ -1,0 +1,22 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('GIT') {
+            steps {
+                git branch: 'main',
+                    changelog: false, 
+                    credentialsId: 'jenkins.github', 
+                    url: 'https://github.com/AymenMb2/devops.git'
+            }
+        }
+        
+        stage('MAVEN Build') {
+            steps {
+                dir('student-management') {
+                    sh 'mvn clean compile package -DskipTests'
+                }
+            }
+        }
+    }
+}
