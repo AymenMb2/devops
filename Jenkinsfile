@@ -1,26 +1,21 @@
 pipeline {
     agent any
-
     stages {
-
         stage('GIT') {
             steps {
-                git 'https://github.com/AymenMb2/devops.git'
+                git branch: 'main', url: 'https://github.com/AymenMb2/devops.git'
             }
         }
-
         stage('MVN CLEAN') {
             steps {
                 sh 'mvn clean'
             }
         }
-
         stage('MVN COMPILE') {
             steps {
                 sh 'mvn compile'
             }
         }
-
         stage('MVN SONARQUBE') {
             steps {
                 sh '''
@@ -31,6 +26,5 @@ pipeline {
                 '''
             }
         }
-
     }
 }
