@@ -19,10 +19,7 @@ public class EnrollmentService implements IEnrollment {
 
     @Override
     public Enrollment getEnrollmentById(Long idEnrollment) {
-        // ❌ Avant (bug)
-        // return enrollmentRepository.findById(idEnrollment).get();
-
-        // ✅ Après (corrigé)
+       
         return enrollmentRepository.findById(idEnrollment)
                 .orElseThrow(() -> new RuntimeException("Enrollment not found with id: " + idEnrollment));
     }
@@ -37,3 +34,4 @@ public class EnrollmentService implements IEnrollment {
         enrollmentRepository.deleteById(idEnrollment);
     }
 }
+
