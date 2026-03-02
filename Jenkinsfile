@@ -2,19 +2,25 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
+        stage('GIT') {
             steps {
-                git branch: 'main',
+                git branch: 'master',
                     changelog: false,
-                    credentialsId: 'jenkins.github',
+                    credentialsId: 'jenkins-github',
                     url: 'https://github.com/AymenMb2/devops.git'
             }
         }
 
-        stage('Maven Build') {
+        stage('MAVEN Build') {
             steps {
-                dir('student-management') {
-                    sh 'mvn clean package -DskipTests'
+                sh 'mvn -B -DskipTests clean package'
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('sonarqube') {
+                    sh 'mvn sonar:sonar'
                 }
             }
         }
